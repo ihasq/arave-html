@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>arave</title>
+		<meta charset="utf-8" />
+<noscript id="ascii_title">
+     _.
+     `3À
+     ,M#,
+     d'V$.   ,.    _      __   ____   ____   __
+    ,7 `WÀ    ^YB,r^9b ,jP""^b,`VM(   `Y&' dÁ""&b
+    ŷ'  V&.    W#   `` $6    )b `$b    d' 6f    Yb
+   ,#   `MÀ    $N      ``   ,$&  Y&.  ,Y !N;    ;&
+   j&    ß&.   B%      ,nd&f"M#   %A  M  :$Nuc+>9"
+  ,&gnuxĆ%RÀ   RS      Af``  1K   `Mbf'  `W. ``   ;
+  d'``````VW.  &8      $l    #(    Y$Y    Vl    ,7
+_J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
+`````    `````````        ``        `        ``
+
+🐐  Arave - The Universal FLOSS Code Editor
+
+🔥  Version 0.0.1 preview release
+
+💻  Created and maintained by @ihasq
+
+🏛️  Licensed by GNU General Public License V3
+
+🔍  Learn more at https://ihasq.com/arave
+</noscript>
+		<style>
+			* {
+
+				--text-size: 16px;
+				--footer-height: 16px;
+
+				margin: 0px;
+				padding: 0px;
+				outline-offset: -1px;
+				box-sizing: border-box;
+
+				font-family: "Monaco", 'Courier New', Courier, monospace;
+				font-size: 14px;
+			}
+			::selection {
+				background-color: transparent;
+			}
+			body {
+				height: 100vh;
+				width: 100vw;
+			}
+			div.grid-container {
+				width: 100%;
+				height: 100%;
+				display: grid;
+			}
+
+			div.grid-container.client {
+				grid-template-rows: calc(100% - 16.5px) 16px;
+			}
+			div.grid-container.vertical-divider {
+				grid-template-rows: 50% 50% ;
+			}
+
+			/** div.footer **/
+			div.footer {
+				display: grid;
+				grid-template-columns: 30px calc(100vw - 60px) 30px;
+				background-color: #dde;
+			}
+			div.footer > span {
+				white-space: pre;
+				color: #000;
+			}
+
+			div.window {
+				outline: #444 1px solid;
+				outline-offset: 0.5px;
+			}
+			
+			pre {
+				background-color: #fff;
+				color: #000;
+				height: 100%;
+				width: 100%;
+				overflow: hidden;
+			}
+			span.text::selection {
+				background-color: #0ff;
+				color: #111;
+			}
+			span.line.active {
+				background-color: #def;
+			}
+
+			span.tab > .active.js {
+				background-color: #ead41c;
+				color: #111;
+			}
+			span.tab > .idle {
+				background-color: #dde;
+				color: #555;
+			}
+			span.outline {
+				color: #888;
+			}
+			/** cursor and input settings **/
+			#spancursor {
+				outline-offset: 0.5px;
+			}
+
+			textarea.cursor {
+				height: 8px;
+				width: 1px;
+				opacity: 0;
+				position: absolute;
+				resize: none;
+				overflow: hidden;
+				box-sizing: border-box;
+			}
+			.grid {
+				display: grid;
+			}
+			.vertical {
+				grid-template-columns: attr(ratio);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="grid-container client" id="0">
+			<div class="grid-container vertical-divider" index="3" id="1">
+				<div class="window">
+					<pre id="2"><span class="tab"><span class="active js"> app.js ● </span></span>
+<span class="outline">     app.js > main()</span>
+<span class="line active"><span class="number"> 001 </span><span class="text">functi<span id="spancursor" blinkConfig="false"><textarea class="cursor" autocomplete="off"></textarea></span>on main() {</span></span>
+<span class="line"><span class="number"> 001 </span><span class="text">function main() {</span></span></pre>
+				</div>
+				<div class="window">
+					<pre id="3"><span class="tab"><span class="idle js"> app.js ● </span></span>
+<span class="outline">     app.js > main()</span>
+<span class="line"><span class="number"> 001 </span><span class="text">function main() {</span></span></pre>
+				</div>
+			</div>
+			<div class="footer" id="4">
+				<span> app</span><div></div><span>app</span>
+			</div>
+		</div>
+		<script type="text/javascript">
+
+			"use strict";
+
+			{
+
+				window.arave = {
+					settings: {
+						editor: {
+							fontSize: 14,
+							fontFamily: "monospace",
+							scrollSensitivity: 0.7,
+							style: {
+								tab: {
+									active: {
+										"text/javascript": {
+											background: 0xead41c,
+											color: 0x111111
+										},
+									}
+								},
+								cursor: {
+									color: "#000 1px solid",
+									interval: 500
+								}
+							},
+							syntax: {
+								a: ""
+							}
+						},
+						shortcuts: {}
+					},
+					property: {
+						user: {
+							state: "input",
+							focusId: 1,
+							cursor: {
+								isShowed: true
+							}
+						}
+					},
+					element: {
+						cursor: document.getElementById("spancursor"),
+						inputBuffer: document.querySelector("textarea.cursor"),
+					},
+					buffer: {
+						textarea: "",
+						layout: {
+							tabs: [
+							/**
+							 * 	expected object structure:
+							 * 	{
+							 * 		title: "/app.js",
+							 * 		type: "text/javascript",
+							 * 		buffer: "function main() {\n\tconsole.log(\"hello, world!\");\n};",
+							 * 		info: {
+							 * 			select: [
+							 * 				{
+							 * 					buffId: 0,
+							 * 					from: 4,
+							 * 					to: 15
+							 * 				}
+							 * 			],
+							 * 			warn: [
+							 * 				{
+							 * 					buffId: 0,
+							 * 					from: 17,
+							 * 					to: 20
+							 * 				}
+							 * 			]
+							 * 		}
+							 * 	}
+							 **/
+							]
+						},
+						changelog: {
+							data: "",
+							currentPhase: 0,
+						},
+					},
+
+					dev: {
+						mousemove: [],
+						wheel: []
+					},
+
+					// methods
+
+					setWindowFocus(window) {
+
+					},
+
+					setTabIndex(tab) {
+						
+					},
+
+					setCursor(line, column) {
+
+					},
+
+					defaultBlinkProcess() {
+						this.element.cursor.style.outline = (this.property.user.cursor.isShowed)? this.settings.editor.style.cursor.color : "none";
+						this.property.user.cursor.isShowed = !(this.property.user.cursor.isShowed);
+						setTimeout("arave.defaultBlinkProcess()", this.settings.editor.style.cursor.interval);
+					},
+
+					createInstance(init) {
+						if(typeof init === "object") {
+							init.instanceId = this.buffer.layout.tabs.length; // This process is not suitable: it doesn't work because it generates duplicate ids
+							this.buffer.layout.tabs.push(init);
+						} else {
+							throw new Error("Failed to create new instance: argument must be given an object");
+						}
+					},
+
+					removeInstanceById() {
+
+					},
+
+					createTabById(instanceId) {
+
+					},
+
+					removeTab() {
+
+					}
+
+				};
+
+				window.onload = () => {
+					console.log(document.getElementById("ascii_title").textContent);
+					arave.defaultBlinkProcess();
+				};
+
+				// setup
+				// event registration, default as { passive: true }
+
+				for (const eventData of [
+
+					[
+						"mousemove",
+						event => {
+							if(arave.property.user.isClicked) arave.dev.mousemove.push([event.offsetX, event.offsetY]);
+						},
+					],
+
+					[
+						"mousedown",
+						event => {
+							arave.property.user.isClicked = true;
+						},
+					],
+
+					[
+						"mouseup",
+						event => {
+							arave.property.user.isClicked = false;
+						},
+					],
+
+					[
+						"wheel",
+						event => {
+							arave.dev.wheel.push(event.deltaY);
+						},
+					],
+
+					[
+						"keydown",
+						event => {
+							if(event.code === "Tab") {
+								event.preventDefault();
+								document.getElementById("spancursor").insertAdjacentHTML("beforebegin", "\t")
+							} else if(event.code === "ArrowLeft") {
+							
+							};
+
+						}
+					],
+
+				]) {
+					document.body.addEventListener(...eventData, { passive: true });
+				};
+
+
+
+				// main process
+
+
+				arave.createInstance({
+					title: "/app.js",
+					type: "text/javascript",
+					buffer: "function main() {\n\tconsole.log(\"hello, world!\");\n};",
+					info: {
+						select: [
+							{
+								buffId: 0,
+								from: 4,
+								to: 15
+							}
+						],
+						warn: [
+							{
+								buffId: 0,
+								from: 17,
+								to: 20,
+							}
+						]
+					}
+				});
+
+				arave.element.inputBuffer.focus();
+				arave.element.inputBuffer.addEventListener("keydown", event => {
+					setTimeout(() => console.log(arave.element.inputBuffer.value), 0);
+				});
+
+			};
+
+		</script>
+	</body>
+</html>
