@@ -151,12 +151,34 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 			{
 
 				window.kraken = {
-					settings: {
-						stateId
-					}
+					
+					h: (str, ...arg) => {
+
+					},
+
+					template: [
+						{
+							tag: "ribbon",
+							content: this.h`
+								<label>${this.buffer.config}</label>
+							`
+						}
+					],
+
+					buffer: [
+						{
+							id: 0,
+							type: "divider",
+							config: {
+								direction: "vertical",
+							},
+							child: 2
+						}
+					]
 				}
 
 			}
+
 		</script>
 		<script type="text/javascript">
 
