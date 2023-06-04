@@ -161,17 +161,10 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 			</div>
 		</div>
 		<script type="text/javascript">
-
-			const ui = Array.from(document.getElementById("XAMLUIDeclaration").innerHTML);
-			window.UISpec = {
-
-			};
-
-			for(let i = 0; i < ui.length; i++) {
-				console.log((ui[i] == "\n")? "return" : ui[i]);
-			};
-
-			delete window.UISpec;
+			
+			{
+				console.log((new DOMParser()).parseFromString(document.getElementById("XAMLUIDeclaration").innerHTML.toString(), "text/xml").children);
+			}
 
 			"use strict";
 
@@ -201,7 +194,9 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 								a: ""
 							}
 						},
-						shortcuts: {}
+						shortcuts: {
+							save: "CtrlS"
+						}
 					},
 					property: {
 						user: {
@@ -296,6 +291,14 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 
 					removeTab() {
 
+					},
+
+					save() {
+
+					},
+
+					open() {
+						
 					}
 
 				};
