@@ -144,49 +144,17 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 				<span> app</span><div></div><span>app</span>
 			</div>
 		</div>
-		<script type="text/babel" name="f1-html">
+		<script type="text/babel" name="cross">
 
 			"use strict";
+			window.xhDocument = {
 
-			window.xh = html`
-				<h1></h1>
-			`
-		</script>
-		<script type="text/javascript">
-
-			"use strict";
-
-			{
-
-				window.kraken = {
-					
-					h: (str, ...arg) => {
-
-					},
-
-					template: [
-						{
-							tag: "ribbon",
-							content: this.h`
-								<label>${this.buffer.config}</label>
-							`
-						}
-					],
-
-					buffer: [
-						{
-							id: 0,
-							type: "divider",
-							config: {
-								direction: "vertical",
-							},
-							child: 2
-						}
-					]
-				}
-
-			}
-
+			};
+			window.xh = (str, ...arg) => {
+				console.log(str.join("\0"));
+				console.log(arg);
+			};
+			document.getElementById("app").innerHTML = xh`<h1>${!navigator.gpu}</h1>`;
 		</script>
 		<script type="text/javascript">
 
