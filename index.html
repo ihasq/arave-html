@@ -162,9 +162,16 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 		</div>
 		<script type="text/javascript">
 
-			for(const index of (new DOMParser()).parseFromString(document.getElementById("XAMLUIDeclaration").innerHTML, "application/xml").all) {
-				console.log(index);
+			const ui = Array.from(document.getElementById("XAMLUIDeclaration").innerHTML);
+			window.UISpec = {
+
 			};
+
+			for(let i = 0; i < ui.length; i++) {
+				console.log((ui[i] == "\n")? "return" : ui[i]);
+			};
+
+			delete window.UISpec;
 
 			"use strict";
 
