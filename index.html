@@ -124,6 +124,29 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 				grid-template-columns: attr(ratio);
 			}
 		</style>
+		<template class="xaml">
+			<Window>
+			    <Grid>
+			        <StackPanel>
+			            <Label Height="30"/>
+			            <TextBox Height="30"/>
+			            <TextBox Height="30"/>
+			            <Button Height="30"/>
+					
+			            <StackPanel 
+			                Orientation="Horizontal" 
+			                Height="100"
+			                Margin="10">
+					
+			                <Label Height="30" Width="100"/>
+			                <TextBox Height="30" Width="100"/>
+			                <TextBox Height="30" Width="100"/>
+			                <Button Height="30" Width="100"/>
+			            </StackPanel>
+			        </StackPanel>
+			    </Grid>
+			</Window>
+		</template>
 	</head>
 	<body>
 		<div class="grid-container client" id="0">
@@ -147,9 +170,6 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 		<script type="text/babel" name="cross">
 
 			"use strict";
-			window.xhDocument = {
-
-			};
 			window.xh = (str, ...arg) => {
 				console.log(str.join("\0"));
 				console.log(arg);
