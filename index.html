@@ -125,23 +125,10 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 			.vertical {
 				grid-template-columns: attr(ratio);
 			}
+			div.StackPanel {
+				display: grid;
+			}
 		</style>
-		<template id="XAMLUIDeclaration">
-			<Grid>
-			    <StackPanel>
-			        <Label Height="30"/>
-			        <TextBox Height="30"/>
-			        <TextBox Height="30"/>
-			        <Button Height="30"/>
-			        <StackPanel Orientation="Horizontal" Height="100" Margin="10">
-			            <Label Height="30" Width="100"/>
-			            <TextBox Height="30" Width="100"/>
-			            <TextBox Height="30" Width="100"/>
-			            <Button Height="30" Width="100"/>
-			        </StackPanel>
-			    </StackPanel>
-			</Grid>
-		</template>
 	</head>
 	<body>
 		<div class="grid client" id="0">
@@ -163,10 +150,6 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 			</div>
 		</div>
 		<script type="text/javascript">
-			
-			{
-				console.log((new DOMParser()).parseFromString(document.getElementById("XAMLUIDeclaration").innerHTML.toString(), "text/xml").children);
-			}
 
 			"use strict";
 
