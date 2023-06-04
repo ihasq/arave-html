@@ -124,28 +124,21 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 				grid-template-columns: attr(ratio);
 			}
 		</style>
-		<template class="xaml">
-			<Window>
-			    <Grid>
-			        <StackPanel>
-			            <Label Height="30"/>
-			            <TextBox Height="30"/>
-			            <TextBox Height="30"/>
-			            <Button Height="30"/>
-					
-			            <StackPanel 
-			                Orientation="Horizontal" 
-			                Height="100"
-			                Margin="10">
-					
-			                <Label Height="30" Width="100"/>
-			                <TextBox Height="30" Width="100"/>
-			                <TextBox Height="30" Width="100"/>
-			                <Button Height="30" Width="100"/>
-			            </StackPanel>
+		<template id="XAMLUIDeclaration">
+			<Grid>
+			    <StackPanel>
+			        <Label Height="30"/>
+			        <TextBox Height="30"/>
+			        <TextBox Height="30"/>
+			        <Button Height="30"/>
+			        <StackPanel Orientation="Horizontal" Height="100" Margin="10">
+			            <Label Height="30" Width="100"/>
+			            <TextBox Height="30" Width="100"/>
+			            <TextBox Height="30" Width="100"/>
+			            <Button Height="30" Width="100"/>
 			        </StackPanel>
-			    </Grid>
-			</Window>
+			    </StackPanel>
+			</Grid>
 		</template>
 	</head>
 	<body>
@@ -167,16 +160,11 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 				<span> app</span><div></div><span>app</span>
 			</div>
 		</div>
-		<script type="text/babel" name="cross">
-
-			"use strict";
-			window.xh = (str, ...arg) => {
-				console.log(str.join("\0"));
-				console.log(arg);
-			};
-			document.getElementById("app").innerHTML = xh`<h1>${!navigator.gpu}</h1>`;
-		</script>
 		<script type="text/javascript">
+
+			for(const index of (new DOMParser()).parseFromString(document.getElementById("XAMLUIDeclaration").innerHTML, "application/xml").all) {
+				console.log(index);
+			};
 
 			"use strict";
 
