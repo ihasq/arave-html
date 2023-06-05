@@ -224,7 +224,8 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 							 * 		}
 							 * 	}
 							 **/
-							]
+							],
+							nextInstanceId: 0,
 						},
 						changelog: {
 							data: "",
@@ -260,8 +261,9 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 
 					createInstance(init) {
 						if(typeof init === "object") {
-							init.instanceId = this.buffer.layout.tabs.length; // This process is not suitable: it doesn't work because it generates duplicate ids
+							init.instanceId = this.buffer.layout.nextInstanceId; // This process is not suitable: it doesn't work because it generates duplicate ids
 							this.buffer.layout.tabs.push(init);
+							this.buffer.layout.nextInstanceId++;
 						} else {
 							throw new Error("Failed to create new instance: argument must be given an object");
 						}
