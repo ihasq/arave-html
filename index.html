@@ -50,28 +50,11 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 				height: 100vh;
 				width: 100vw;
 			}
-			div.grid {
-				width: 100%;
+
+			div.main {
 				height: 100%;
+				width: 100%;
 				display: grid;
-			}
-
-			div.grid.client {
-				grid-template-rows: calc(100% - 16.5px) 16px;
-			}
-			div.grid.vertical-divider {
-				grid-template-rows: 50% 50% ;
-			}
-
-			/** div.footer **/
-			div.footer {
-				display: grid;
-				grid-template-columns: 30px calc(100vw - 60px) 30px;
-				background-color: #dde;
-			}
-			div.footer > span {
-				white-space: pre;
-				color: #000;
 			}
 
 			div.window {
@@ -119,36 +102,14 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 				overflow: hidden;
 				box-sizing: border-box;
 			}
-			.grid {
-				display: grid;
-			}
-			.vertical {
-				grid-template-columns: attr(ratio);
-			}
-			div.StackPanel {
-				display: grid;
-			}
 		</style>
+		<template id="window">
+			<div class="grid vertical dock"></div>
+		</template>
 	</head>
 	<body>
-		<div class="grid client" id="0">
-			<div class="grid vertical-divider" index="3" id="1">
-				<div class="window">
-					<pre id="2"><span class="tab"><span class="active js"> app.js ● </span></span>
-<span class="outline">     app.js > main()</span>
-<span class="line active"><span class="number"> 001 </span><span class="text">functi<span id="spancursor" blinkConfig="false"><textarea class="cursor" autocomplete="off"></textarea></span>on main() {</span></span>
-<span class="line"><span class="number"> 001 </span><span class="text">function main() {</span></span></pre>
-				</div>
-				<div class="window">
-					<pre id="3"><span class="tab"><span class="idle js"> app.js ● </span></span>
-<span class="outline">     app.js > main()</span>
-<span class="line"><span class="number"> 001 </span><span class="text">function main() {</span></span></pre>
-				</div>
-			</div>
-			<div class="footer" id="4">
-				<span> app</span><div></div><span>app</span>
-			</div>
-		</div>
+		<div class="main">
+		<span id="spancursor" blinkConfig="false"><textarea class="cursor" autocomplete="off"></textarea></span></div>
 		<script type="text/javascript">
 
 			"use strict";
