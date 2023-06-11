@@ -42,6 +42,7 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 
 				font-family: "Monaco", 'Courier New', Courier, monospace;
 				font-size: 14px;
+
 			}
 			::selection {
 				background-color: transparent;
@@ -92,6 +93,12 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 			#spancursor {
 				outline-offset: 0.5px;
 			}
+			#spancursor[blink = "false"] {
+				outline: none
+			}
+			#spancursor[blink = "true"] {
+				outline: #000 1px solid
+			}
 
 			textarea.cursor {
 				height: 8px;
@@ -109,7 +116,10 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 	</head>
 	<body>
 		<div class="main">
-		<span id="spancursor" blinkConfig="false"><textarea class="cursor" autocomplete="off"></textarea></span></div>
+			<pre>
+f<span id="spancursor" blinkConfig="false"><textarea class="cursor" autocomplete="off"></textarea></span>unction
+			</pre>
+		</div>
 		<script type="text/javascript">
 
 			"use strict";
@@ -215,7 +225,7 @@ _J7_     _)NM_JMK_,     `9Mumf'b_.  V      "Vbd7^
 					},
 
 					defaultBlinkProcess() {
-						this.element.cursor.style.outline = (this.property.user.cursor.isShowed)? this.settings.editor.style.cursor.color : "none";
+						this.element.cursor.setAttribute("blink", ((this.property.user.cursor.isShowed)? "false" : "true"));
 						this.property.user.cursor.isShowed = !(this.property.user.cursor.isShowed);
 						setTimeout("arave.defaultBlinkProcess()", this.settings.editor.style.cursor.interval);
 					},
